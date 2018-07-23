@@ -7,7 +7,6 @@ import helper from '../../helpers/PromiseProgressBar';
 
 class PromiseProgressBar extends Component {
     render() {
-        console.log('progress bar render');
         helper.progressBar();
         return(
             <div>
