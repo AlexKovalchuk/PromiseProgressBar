@@ -83,21 +83,4 @@ promiseArray.push(promise9);
 promiseArray.push(promise10);
 promiseArray.push(promise11);
 
-let promiseProgress = 0;
-
-let arrTMP = [
-    new Promise((resolve, reject) => {
-        setTimeout(() => {
-            console.log('first asynchronous task just completed');
-            resolve({data: 'one'});
-        }, 1000);
-    }),
-    new Promise((resolve, reject) => {
-        setTimeout(() => {
-            console.log('second asynchronous task just completed');
-            resolve({data: 'two'});
-        }, 2000);
-    })
-];
-
-export default {promiseArray, promiseProgress};
+export default promiseArray;

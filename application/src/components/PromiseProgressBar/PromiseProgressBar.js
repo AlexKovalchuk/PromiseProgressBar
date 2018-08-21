@@ -3,17 +3,19 @@
  */
 import React, {Component} from 'react';
 import './PromiseProgressBar.css';
-import helper from '../../helpers/PromiseProgressBar';
-import promiseHelper from '../../helpers/PromiseArray';
+import promiseIndicator, {doneProcesses} from '../../helpers/PromiseProgressBar';
+import promiseArray from '../../helpers/PromiseArray';
 
 class PromiseProgressBar extends Component {
     render() {
-        helper.progressBar();
-        console.log('promise array', promiseHelper.promiseArray);
+        promiseIndicator(promiseArray);
         return(
             <div>
                 here will be my progress bar
-                <h1>We have {promiseHelper.promiseArray.length} processes.</h1>
+                <h1>We have {promiseArray.length} processes.</h1>
+                <div>
+                    done processes {doneProcesses}
+                </div>
             </div>
         )
     }
