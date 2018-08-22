@@ -5,19 +5,18 @@
 export let doneProcesses = 0;
 
 const promiseIndicator = (promiseArray) => {
+    let chain = Promise.resolve();
+    let results = [];
+    let progressChecker = 0;
+
     // console.log('helper', promiseArray);
     // начало цепочки
-    let chain = Promise.resolve();
-
-    let results = [];
-
-// в цикле добавляем задачи в цепочку
     promiseArray.forEach((promise, index) => {
         chain = chain
             .then(() => promise)
-            .then((result) => {
-                doneProcesses = index;
-                console.log('result', result, 'done =', doneProcesses);
+            .then(result => {
+                progressChecker++;
+                console.log('result', result, 'done =', progressChecker);
                 results.push(result);
             });
     });

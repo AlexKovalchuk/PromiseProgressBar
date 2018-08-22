@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import './PromiseProgressBar.css';
-import promiseIndicator, {doneProcesses} from '../../helpers/PromiseProgressBar';
+import promiseIndicator from '../../helpers/PromiseProgressBar';
 import promiseArray from '../../helpers/PromiseArray';
 
 class PromiseProgressBar extends Component {
@@ -14,7 +14,7 @@ class PromiseProgressBar extends Component {
                 here will be my progress bar
                 <h1>We have {promiseArray.length} processes.</h1>
                 <div>
-                    done processes {doneProcesses}
+                    done processes ????
                 </div>
             </div>
         )
