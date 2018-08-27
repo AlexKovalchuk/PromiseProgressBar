@@ -2,8 +2,6 @@
  * Created by alex on 7/23/18.
  */
 
-export let doneProcesses = 0;
-
 const promiseIndicator = (promiseArray) => {
     let chain = Promise.resolve();
     let results = [];
