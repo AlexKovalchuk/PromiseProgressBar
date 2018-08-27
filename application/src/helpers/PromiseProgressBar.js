@@ -4,6 +4,7 @@
 
 export let doneProcesses = 0;
 
+
 const promiseIndicator = (promiseArray) => {
     let chain = Promise.resolve();
     let results = [];
@@ -18,6 +19,7 @@ const promiseIndicator = (promiseArray) => {
                 progressChecker++;
                 console.log('result', result, 'done =', progressChecker);
                 results.push(result);
+                doneProcesses++;
             });
     });
 
