@@ -24,7 +24,7 @@ class PromiseProgressBar {
         if(typeof this._collback === 'function'){
             this._collback();
         }
-    }
+    };
 
     promiseCollback = (promise, error) => {
         if(this._promiseList.get(promise) === false) {
@@ -33,7 +33,8 @@ class PromiseProgressBar {
             } else {
                 this._doneSuccess += 1;
             }
-            this._promiseList.st(promise, true);
+            this._promiseList.set(promise, true);
+            this.emit();
         }
     };
 
