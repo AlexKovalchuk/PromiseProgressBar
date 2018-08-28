@@ -2,19 +2,44 @@
  * Created by alex on 7/23/18.
  */
 
+// класс с колбуков(функция с выводом полей обьекта)
+// Главная функция : принимает массив промисов. Загоняем массив промисов в Map(),
+//  устанавливаем поля обьекста в НОЛЬ
+//  пробегаемся по промисам, утсанавливаем два колбека для резолв и реджект
+// Колбек функция: принимает промис и проверяет или он не выполнен.
+//  плюсует поля: выолнено ок или с ошибкой
+//  выполняю колбек который дает обновленные данные
+// Геттер функции для полей.
+
 class PromiseProgressBar {
     constructor(collBackFunction){
         this._totalCount = 0;
         this._doneSuccess = 0;
         this._doneError = 0;
         this._promiseList = new Map();
+        this._collback = collBackFunction;
     }
 
-    promiseCollback = promise => {
+    emit = () => {
+        if(typeof this._collback === 'function'){
+            this._collback();
+        }
+    }
 
+    promiseCollback = (promise, error) => {
+        if(this._promiseList.get(promise) === false) {
+            if(error) {
+                this._doneError += 1;
+            } else {
+                this._doneSuccess += 1;
+            }
+            this._promiseList.st(promise, true);
+        }
     };
 
     resolvePromises = promiseArray => {
+        this._totalCount = promiseArray.length;
+
         for (let promise of promiseArray) {
             this._promiseList.set(promise, false);
         }
