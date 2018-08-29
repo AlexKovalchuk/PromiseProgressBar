@@ -4,7 +4,7 @@
 
 // класс с колбуков(функция с выводом полей обьекта)
 // Главная функция : принимает массив промисов. Загоняем массив промисов в Map(),
-//  устанавливаем поля обьекста в НОЛЬ
+//  устанавливаем поля обьекта в НОЛЬ
 //  пробегаемся по промисам, утсанавливаем два колбека для резолв и реджект
 // Колбек функция: принимает промис и проверяет или он не выполнен.
 //  плюсует поля: выолнено ок или с ошибкой
@@ -16,6 +16,8 @@ class PromiseProgressBar {
         this._totalCount = 0;
         this._doneSuccess = 0;
         this._doneError = 0;
+        this._timeSpend = 0;
+        this._timeLeft = 0;
         this._promiseList = new Map();
         this._collback = collBackFunction;
     }
@@ -54,10 +56,55 @@ class PromiseProgressBar {
                     error => this.promiseCollback(promise,error)
                 )
         }
+    };
+
+    get getTotalCount() {
+        return this._totalCount;
     }
+
+    get getDoneSuccess() {
+        return this._doneSuccess;
+    }
+
+    get getDoneError() {
+        return this._doneError;
+    }
+
+    get getTimeLeft() {
+        return this._timeLeft;
+    }
+
+    get getTimeSpend() {
+        return this._timeSpend;
+    }
+
 
 }
 
+const rollBack = () => {
+    console.info(`total: ${this.getTotalCount()}, success: ${this.getDoneSuccess} / errors: ${this.getDoneError}`);
+};
+
+const promises = [
+    new Promise(function(resolve, reject) {
+        setTimeout(() => resolve(1), 1000); // (*)
+    }),
+    new Promise(function(resolve, reject) {
+        setTimeout(() => resolve(2), 2000); // (*)
+    }),
+    new Promise(function(resolve, reject) {
+        setTimeout(() => reject(4), 4000); // (*)
+    }),
+    new Promise(function(resolve, reject) {
+        setTimeout(() => resolve(8), 8000); // (*)
+    }),
+    new Promise(function(resolve, reject) {
+        setTimeout(() => resolve(10), 10000); // (*)
+    }),
+];
+
+const progressBar = new PromiseProgressBar(rollBack);
+progressBar.resolvePromises(promises);
 
 // const promiseIndicator = (promiseArray) => {
 //     let chain = Promise.resolve();
