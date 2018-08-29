@@ -22,13 +22,13 @@ class PromiseProgressBar {
         this._collback = collBackFunction;
     }
 
-    emit = () => {
+    emit(){
         if(typeof this._collback === 'function'){
             this._collback();
         }
     };
 
-    promiseCollback = (promise, error) => {
+    promiseCollback(promise, error) {
         if(this._promiseList.get(promise) === false) {
             if(error) {
                 this._doneError += 1;
@@ -40,7 +40,7 @@ class PromiseProgressBar {
         }
     };
 
-    resolvePromises = promiseArray => {
+    resolvePromises(promiseArray){
         this._totalCount = promiseArray.length;
 
         for (let promise of promiseArray) {
@@ -49,7 +49,9 @@ class PromiseProgressBar {
         this._totalCount = 0;
         this._doneSuccess = 0;
         this._doneError = 0;
-        for (let promise of this._promiseList) {
+
+        for (let promise in this._promiseList) {
+            console.info(`promise: ${promise}`);
             promise
                 .then(
                     resolve => this.promiseCollback(promise),
@@ -93,7 +95,7 @@ const promises = [
         setTimeout(() => resolve(2), 2000); // (*)
     }),
     new Promise(function(resolve, reject) {
-        setTimeout(() => reject(4), 4000); // (*)
+        setTimeout(() => resolve(4), 4000); // (*)
     }),
     new Promise(function(resolve, reject) {
         setTimeout(() => resolve(8), 8000); // (*)
