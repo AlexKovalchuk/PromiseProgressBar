@@ -43,20 +43,20 @@ class PromiseProgressBar {
     };
 
     resolvePromises(promiseArray){
-        console.info('promiseArray', promiseArray)
+        // console.info('promiseArray', promiseArray);
         this._totalCount = promiseArray.length;
 
         for (let promise of promiseArray) {
             this._promiseList.set(promise, false);
         }
-        console.info('list', this._promiseList);
+        // console.info('list', this._promiseList);
         this._totalCount = 0;
         this._doneSuccess = 0;
         this._doneError = 0;
-        console.info('total count = ', this.getTotalCount)
-        for (let promise of this._promiseList) {
-            console.info(`promise: ${promise}`);
-            promise
+        // console.info('total count = ', this.getTotalCount)
+        for (let [key, value] of this._promiseList) {
+            console.info(`promise: ${key}`);
+            key
                 .then(
                     resolve => this.promiseCollback(promise),
                     error => this.promiseCollback(promise,error)
