@@ -23,14 +23,15 @@ class PromiseProgressBar {
     }
 
     emit(){
-        console.info('emit');
+        // console.info('emit');
         if(typeof this._collback === 'function'){
             this._collback();
+            console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}`);
         }
     };
 
     promiseCollback(promise, error) {
-        console.info('callback promise:', promise);
+        // console.info('callback promise:', promise);
         if(this._promiseList.get(promise) === false) {
             if(error) {
                 this._doneError += 1;
@@ -55,12 +56,13 @@ class PromiseProgressBar {
         this._doneError = 0;
         // console.info('total count = ', this.getTotalCount)
         for (let [key, value] of this._promiseList) {
-            console.info(`promise: ${key}`);
+            // console.info(`promise: ${key}`);
             key
                 .then(
-                    resolve => this.promiseCollback(promise),
-                    error => this.promiseCollback(promise,error)
+                    resolve => this.promiseCollback(key),
+                    error => this.promiseCollback(key,error)
                 )
+                .catch(e => console.info('error:',e));
         }
     };
 
@@ -88,7 +90,7 @@ class PromiseProgressBar {
 }
 
 const rollBack = () => {
-    console.info(`total: ${this.getTotalCount()}, success: ${this.getDoneSuccess} / errors: ${this.getDoneError}`);
+    console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}`);
 };
 
 const promises = [
