@@ -19,15 +19,11 @@ class PromiseProgressBar {
         this._timeSpend = 0;
         this._timeLeft = 0;
         this._promiseList = new Map();
-        this._collback = collBackFunction;
+        this._collback = collBackFunction.bind(this);
     }
 
     emit(){
-        // console.info('emit');
-        if(typeof this._collback === 'function'){
-            this._collback();
-            console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}`);
-        }
+        if(typeof this._collback === 'function') this._collback();
     };
 
     promiseCollback(promise, error) {
@@ -89,7 +85,7 @@ class PromiseProgressBar {
 
 }
 
-const rollBack = () => {
+const rollBack = function() {
     console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}`);
 };
 
