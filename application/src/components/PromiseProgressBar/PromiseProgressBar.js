@@ -3,12 +3,11 @@
  */
 import React, {Component} from 'react';
 import './PromiseProgressBar.css';
-import promiseIndicator from '../../helpers/PromiseProgressBar';
+// import promiseIndicator from '../../helpers/PromiseProgressBar';
 import promiseArray from '../../helpers/PromiseArray';
 
 class PromiseProgressBar extends Component {
     render() {
-        promiseIndicator(promiseArray);
         return(
             <div>
                 here will be my progress bar
