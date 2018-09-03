@@ -20,13 +20,20 @@ class PromiseProgressBar {
         this._timeLeft = 0;
         this._promiseList = new Map();
         this._collback = collBackFunction;
+        this._timeStart = 0;
+        this._timeEnd = 0;
     }
 
     emit(){
-        // console.info('emit');
+        console.info('emit');
+        this._timeSpend += this._timeEnd-this._timeStart;
+        console.info('time taken', this._timeEnd-this._timeStart);
+        this._timeEnd=0;
+        this._timeStart=0;
+        console.info('emit');
         if(typeof this._collback === 'function'){
             this._collback();
-            console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}`);
+            // console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
         }
     };
 
@@ -39,6 +46,7 @@ class PromiseProgressBar {
                 this._doneSuccess += 1;
             }
             this._promiseList.set(promise, true);
+            this._timeEnd = new Date().getTime();
             this.emit();
         }
     };
@@ -57,6 +65,7 @@ class PromiseProgressBar {
         // console.info('total count = ', this.getTotalCount)
         for (let [key, value] of this._promiseList) {
             // console.info(`promise: ${key}`);
+            this._timeStart = new Date().getTime();
             key
                 .then(
                     resolve => this.promiseCollback(key),
@@ -90,7 +99,7 @@ class PromiseProgressBar {
 }
 
 const rollBack = () => {
-    console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}`);
+    console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
 };
 
 const promises = [
