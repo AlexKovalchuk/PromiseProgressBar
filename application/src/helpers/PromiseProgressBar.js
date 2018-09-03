@@ -20,16 +20,15 @@ class PromiseProgressBar {
         this._timeLeft = 0;
         this._promiseList = new Map();
         this._collback = collBackFunction.bind(this);
-        this._collback = collBackFunction;
         this._timeStart = 0;
         this._timeEnd = 0;
     }
 
     emit(){
-        if(typeof this._collback === 'function') this._collback();
         console.info('emit');
         this._timeSpend += this._timeEnd-this._timeStart;
-        console.info('time taken', this._timeEnd-this._timeStart);
+        console.info('time end', this._timeEnd, 'time start', this._timeStart);
+        console.info('time taken', this._timeEnd - this._timeStart);
         this._timeEnd=0;
         this._timeStart=0;
         console.info('emit');
@@ -47,8 +46,8 @@ class PromiseProgressBar {
             } else {
                 this._doneSuccess += 1;
             }
-            this._promiseList.set(promise, true);
             this._timeEnd = new Date().getTime();
+            this._promiseList.set(promise, true);
             this.emit();
         }
     };
@@ -100,10 +99,8 @@ class PromiseProgressBar {
 
 }
 
-const rollBack = () => {
-    console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
 const rollBack = function() {
-    console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}`);
+    console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
 };
 
 const promises = [
