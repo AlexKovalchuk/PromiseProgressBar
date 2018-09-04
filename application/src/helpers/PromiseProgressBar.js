@@ -12,7 +12,7 @@
 // Геттер функции для полей.
 
 class PromiseProgressBar {
-    constructor(collBackFunction){
+    constructor(collBackFunction) {
         this._totalCount = 0;
         this._doneSuccess = 0;
         this._doneError = 0;
@@ -24,15 +24,15 @@ class PromiseProgressBar {
         this._timeEnd = 0;
     }
 
-    emit(){
+    emit() {
         console.info('emit');
-        this._timeSpend += this._timeEnd-this._timeStart;
+        this._timeSpend += this._timeEnd - this._timeStart;
         console.info('time end', this._timeEnd, 'time start', this._timeStart);
         console.info('time taken', this._timeEnd - this._timeStart);
-        this._timeEnd=0;
-        this._timeStart=0;
+        this._timeEnd = 0;
+        this._timeStart = 0;
         console.info('emit');
-        if(typeof this._collback === 'function'){
+        if (typeof this._collback === 'function') {
             this._collback();
             // console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
         }
@@ -40,8 +40,8 @@ class PromiseProgressBar {
 
     promiseCollback(promise, error) {
         // console.info('callback promise:', promise);
-        if(this._promiseList.get(promise) === false) {
-            if(error) {
+        if (this._promiseList.get(promise) === false) {
+            if (error) {
                 this._doneError += 1;
             } else {
                 this._doneSuccess += 1;
@@ -52,7 +52,7 @@ class PromiseProgressBar {
         }
     };
 
-    resolvePromises(promiseArray){
+    resolvePromises(promiseArray) {
         // console.info('promiseArray', promiseArray);
         this._totalCount = promiseArray.length;
 
@@ -60,19 +60,20 @@ class PromiseProgressBar {
             this._promiseList.set(promise, false);
         }
         // console.info('list', this._promiseList);
-        this._totalCount = 0;
+        this._totalCount = promiseArray.length;
         this._doneSuccess = 0;
         this._doneError = 0;
         // console.info('total count = ', this.getTotalCount)
         for (let [key, value] of this._promiseList) {
-            // console.info(`promise: ${key}`);
+            console.info(`promise: ${key}`);
             this._timeStart = new Date().getTime();
+
             key
                 .then(
                     resolve => this.promiseCollback(key),
-                    error => this.promiseCollback(key,error)
+                    error => this.promiseCollback(key, error)
                 )
-                .catch(e => console.info('error:',e));
+                .catch(e => console.info('error:', e));
         }
     };
 
@@ -99,24 +100,24 @@ class PromiseProgressBar {
 
 }
 
-const rollBack = function() {
+const rollBack = function () {
     console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
 };
 
 const promises = [
-    new Promise(function(resolve, reject) {
+    new Promise(function (resolve, reject) {
         setTimeout(() => resolve(1), 1000); // (*)
     }),
-    new Promise(function(resolve, reject) {
+    new Promise(function (resolve, reject) {
         setTimeout(() => resolve(2), 2000); // (*)
     }),
-    new Promise(function(resolve, reject) {
+    new Promise(function (resolve, reject) {
         setTimeout(() => resolve(4), 4000); // (*)
     }),
-    new Promise(function(resolve, reject) {
+    new Promise(function (resolve, reject) {
         setTimeout(() => resolve(8), 8000); // (*)
     }),
-    new Promise(function(resolve, reject) {
+    new Promise(function (resolve, reject) {
         setTimeout(() => resolve(10), 10000); // (*)
     }),
 ];
