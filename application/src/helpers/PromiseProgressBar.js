@@ -40,7 +40,7 @@ class PromiseProgressBar {
         sum += timeOfDonePromises[i];
     }
       this._simpleMovingAverage =  Math.round(sum/promiseCount)/1000;
-}
+  }
 
     calculatePercentageOfDonePromises() {
         let done = this._doneSuccess + this._doneError;
@@ -48,33 +48,24 @@ class PromiseProgressBar {
     }
 
     emit() {
-        // console.info('emit');
-        this._timeSpend += this._timeEnd - this._timeStart;
+        this._timeSpend = this._timeEnd - this._timeStart;
         this._totalTimeSpend += this._timeSpend;
         this._timeForEachDonePromise.push(this._timeSpend);
-        // console.info('time end', this._timeEnd, 'time start', this._timeStart);
-        // console.info('time taken', this._timeSpend);
-        // console.info('time totalTimeSpend', this._totalTimeSpend);
         this._timeEnd = 0;
         this._timeStart = 0;
         this.calculatePercentageOfDonePromises();
         this.calculateSimpleMovingAverage();
-        // console.info('emit');
-        if (typeof this._collback === 'function') {
-            this._collback();
-            // console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
-        }
+        if (typeof this._collback === 'function') this._collback();
     };
 
     promiseCollback(promise, error, timeStart) {
-        // console.info('callback promise:', promise);
         if (this._promiseList.get(promise) === false) {
             if (error) {
                 this._doneError += 1;
             } else {
                 this._doneSuccess += 1;
             }
-            this._timeSpend = new Date().getTime();
+            this._timeEnd = new Date().getTime();
             this._timeStart = timeStart;
             this._promiseList.set(promise, true);
             this.emit();
@@ -92,9 +83,7 @@ class PromiseProgressBar {
         this._totalCount = promiseArray.length;
         this._doneSuccess = 0;
         this._doneError = 0;
-        // console.info('total count = ', this.getTotalCount)
         for (let [key, value] of this._promiseList) {
-            // console.info(`promise: ${key}`);
             let timeStart = new Date().getTime();
             key
                 .then(
@@ -134,60 +123,36 @@ const rollBack = function () {
 
 const promises = [
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(1), 1000); // (*)
+        setTimeout(() => resolve(1), 10000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(2), 2000); // (*)
+        setTimeout(() => resolve(2), 9000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(4), 4000); // (*)
+        setTimeout(() => resolve(4), 8000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(8), 8000); // (*)
+        setTimeout(() => resolve(8), 7000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(10), 10000); // (*)
+        setTimeout(() => resolve(10), 6000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(8), 8000); // (*)
+        setTimeout(() => resolve(12), 5000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(4), 4000); // (*)
+        setTimeout(() => resolve(14), 4000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(2), 2000); // (*)
+        setTimeout(() => resolve(16), 3000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(1), 1000); // (*)
+        setTimeout(() => resolve(18), 2000); // (*)
+    }),
+    new Promise(function (resolve, reject) {
+        setTimeout(() => resolve(18), 1000); // (*)
     }),
 ];
 
 const progressBar = new PromiseProgressBar(rollBack);
 progressBar.resolvePromises(promises);
-
-// const promiseIndicator = (promiseArray) => {
-//     let chain = Promise.resolve();
-//     let results = [];
-//     let progressChecker = 0;
-//
-//     // console.log('helper', promiseArray);
-//     // начало цепочки
-//     promiseArray.forEach((promise, index) => {
-//         chain = chain
-//             .then(() => promise)
-//             .then(result => {
-//                 progressChecker++;
-//                 console.log('result', result, 'done =', progressChecker);
-//                 results.push(result);
-//             });
-//     });
-//
-// // в конце — выводим результаты
-//     chain.then(() => {
-//         console.log('results total:', results);
-//     });
-// };
-//
-//
-//
-// export default promiseIndicator;
