@@ -21,7 +21,7 @@ class PromiseProgressBar {
         this._timeForEachDonePromise = [];
         this._timeLeft = 0;
         this._promiseList = new Map();
-        this._collback = collBackFunction.bind(this);
+        this._collback = collBackFunction;
         this._timeStart = 0;
         this._timeEnd = 0;
         this._percentDonePromises = 0;
@@ -55,7 +55,16 @@ class PromiseProgressBar {
         this._timeStart = 0;
         this.calculatePercentageOfDonePromises();
         this.calculateSimpleMovingAverage();
-        if (typeof this._collback === 'function') this._collback();
+        let done = this._doneSuccess + this._doneError;
+
+        const data = {
+            tasksCount: this._totalCount,
+            tasksDone: done,
+            percentDone: this._percentDonePromises,
+            timeSpend: this._totalTimeSpend,
+            sma: this._simpleMovingAverage
+        };
+        if (typeof this._collback === 'function') this._collback(data);
     };
 
     promiseCollback(promise, error, timeStart) {
@@ -118,7 +127,7 @@ class PromiseProgressBar {
 }
 
 const rollBack = function () {
-    console.info(`total promises count: ${this._totalCount}, percent of done promises: ${this._percentDonePromises}%, success: ${this._doneSuccess} / errors: ${this._doneError}, total time spend: ${this._totalTimeSpend}, time of all done promises: ${this._timeForEachDonePromise}, time left: ${this._simpleMovingAverage} seconds`);
+    // console.info(`total promises count: ${this._totalCount}, percent of done promises: ${this._percentDonePromises}%, success: ${this._doneSuccess} / errors: ${this._doneError}, total time spend: ${this._totalTimeSpend}, time of all done promises: ${this._timeForEachDonePromise}, time left: ${this._simpleMovingAverage} seconds`);
 };
 
 const promises = [
@@ -154,5 +163,7 @@ const promises = [
     }),
 ];
 
-const progressBar = new PromiseProgressBar(rollBack);
-progressBar.resolvePromises(promises);
+// const progressBar = new PromiseProgressBar(rollBack);
+// progressBar.resolvePromises(promises);
+
+export default PromiseProgressBar;
