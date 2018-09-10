@@ -40,6 +40,7 @@ class PromiseProgressBar {
         sum += timeOfDonePromises[i];
     }
       this._simpleMovingAverage =  Math.round(sum/promiseCount)/1000;
+      if(this.getTotalCount === this._timeForEachDonePromise.length)this._simpleMovingAverage = 0;
   }
 
     calculatePercentageOfDonePromises() {
@@ -49,7 +50,7 @@ class PromiseProgressBar {
 
     emit() {
         this._timeSpend = this._timeEnd - this._timeStart;
-        this._totalTimeSpend += this._timeSpend;
+        this._totalTimeSpend += this._timeSpend/1000;
         this._timeForEachDonePromise.push(this._timeSpend);
         this._timeEnd = 0;
         this._timeStart = 0;
@@ -61,7 +62,7 @@ class PromiseProgressBar {
             tasksCount: this._totalCount,
             tasksDone: done,
             percentDone: this._percentDonePromises,
-            timeSpend: this._totalTimeSpend,
+            timeSpend: parseFloat(this._totalTimeSpend.toFixed(3)),
             sma: this._simpleMovingAverage
         };
         if (typeof this._collback === 'function') this._collback(data);

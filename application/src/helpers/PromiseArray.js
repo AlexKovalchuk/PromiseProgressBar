@@ -6,69 +6,69 @@ const promiseArray = [];
 
 let promise1 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('first asynchronous task just completed');
-        resolve({data: 'one'});
-    }, 1000);
+        console.log('1');
+        resolve({data: '1'});
+    }, 10000);
 });
 let promise2 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('second asynchronous task just completed');
-        resolve({data: 'two'});
-    }, 2000);
+        console.log('2');
+        resolve({data: '2'});
+    }, 9000);
 });
 let promise3 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('third asynchronous task just completed');
-        resolve({data: 'three'});
-    }, 3000);
+        console.log('3');
+        resolve({data: '3'});
+    }, 8000);
 });
 let promise4 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('fourth asynchronous task just completed');
-        resolve({data: 'four'});
-    }, 4000);
+        console.log('4');
+        resolve({data: '4'});
+    }, 7000);
 });
 let promise5 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('fifth asynchronous task just completed');
-        resolve({data: 'five'});
+        console.log('5');
+        resolve({data: '5'});
     }, 5000);
 });
 let promise6 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('sixth asynchronous task just completed');
-        resolve({data: 'six'});
+        console.log('6');
+        resolve({data: '6'});
     }, 6000);
 });
 let promise7 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('seventh asynchronous task just completed');
-        resolve({data: 'seven'});
+        console.log('7');
+        resolve({data: '7'});
     }, 7000);
 });
 let promise8 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('eighth asynchronous task just completed');
-        resolve({data: 'eight'});
-    }, 8000);
+        console.log('8');
+        resolve({data: '8'});
+    }, 5500);
 });
 let promise9 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('ninth asynchronous task just completed');
-        resolve({data: 'nine'});
-    }, 9000);
+        console.log('9');
+        resolve({data: '9'});
+    }, 6500);
 });
 let promise10 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('tens asynchronous task just completed');
-        resolve({data: 'ten'});
-    }, 10000);
+        console.log('10');
+        resolve({data: '10'});
+    }, 15000);
 });
 let promise11 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('eleventh asynchronous task just completed');
-        resolve({data: 'eleven'});
-    }, 11000);
+        console.log('11');
+        resolve({data: '11'});
+    }, 500);
 });
 
 promiseArray.push(promise1);
