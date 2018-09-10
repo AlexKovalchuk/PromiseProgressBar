@@ -17,29 +17,48 @@ class PromiseProgressBar {
         this._doneSuccess = 0;
         this._doneError = 0;
         this._timeSpend = 0;
+        this._totalTimeSpend = 0;
+        this._timeForEachDonePromise = [];
         this._timeLeft = 0;
         this._promiseList = new Map();
         this._collback = collBackFunction.bind(this);
         this._timeStart = 0;
         this._timeEnd = 0;
+        this._percentDonePromises = 0;
+        this._simpleMovingAverage = 0;
+    }
+
+  calculateSimpleMovingAverage() {
+    let sum=0;
+    let timeOfDonePromises = this._timeForEachDonePromise;
+    let promiseCount = this._totalCount;
+    if(promiseCount > timeOfDonePromises.length){
+        promiseCount = timeOfDonePromises.length;
+    }
+
+    for(let i=timeOfDonePromises.length-promiseCount; i<timeOfDonePromises.length; i++){
+        sum += timeOfDonePromises[i];
+    }
+      this._simpleMovingAverage =  Math.round(sum/promiseCount)/1000;
+  }
+
+    calculatePercentageOfDonePromises() {
+        let done = this._doneSuccess + this._doneError;
+        this._percentDonePromises = Math.round(done * 100 / this._totalCount);
     }
 
     emit() {
-        console.info('emit');
-        this._timeSpend += this._timeEnd - this._timeStart;
-        console.info('time end', this._timeEnd, 'time start', this._timeStart);
-        console.info('time taken', this._timeEnd - this._timeStart);
+        this._timeSpend = this._timeEnd - this._timeStart;
+        this._totalTimeSpend += this._timeSpend;
+        this._timeForEachDonePromise.push(this._timeSpend);
         this._timeEnd = 0;
         this._timeStart = 0;
-        console.info('emit');
-        if (typeof this._collback === 'function') {
-            this._collback();
-            // console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
-        }
+        this.calculatePercentageOfDonePromises();
+        this.calculateSimpleMovingAverage();
+        if (typeof this._collback === 'function') this._collback();
     };
 
-    promiseCollback(promise, error) {
-        // console.info('callback promise:', promise);
+    promiseCollback(promise, error, timeStart) {
         if (this._promiseList.get(promise) === false) {
             if (error) {
                 this._doneError += 1;
@@ -47,6 +66,7 @@ class PromiseProgressBar {
                 this._doneSuccess += 1;
             }
             this._timeEnd = new Date().getTime();
+            this._timeStart = timeStart;
             this._promiseList.set(promise, true);
             this.emit();
         }
@@ -63,15 +83,12 @@ class PromiseProgressBar {
         this._totalCount = promiseArray.length;
         this._doneSuccess = 0;
         this._doneError = 0;
-        // console.info('total count = ', this.getTotalCount)
         for (let [key, value] of this._promiseList) {
-            console.info(`promise: ${key}`);
-            this._timeStart = new Date().getTime();
-
+            let timeStart = new Date().getTime();
             key
                 .then(
-                    resolve => this.promiseCollback(key),
-                    error => this.promiseCollback(key, error)
+                    resolve => this.promiseCollback(key, null, timeStart),
+                    error => this.promiseCollback(key, error,timeStart)
                 )
                 .catch(e => console.info('error:', e));
         }
@@ -101,24 +118,39 @@ class PromiseProgressBar {
 }
 
 const rollBack = function () {
-    console.info(`total: ${this._totalCount}, success: ${this._doneSuccess} / errors: ${this._doneError}, time spend: ${this._timeSpend}`);
+    console.info(`total promises count: ${this._totalCount}, percent of done promises: ${this._percentDonePromises}%, success: ${this._doneSuccess} / errors: ${this._doneError}, total time spend: ${this._totalTimeSpend}, time of all done promises: ${this._timeForEachDonePromise}, time left: ${this._simpleMovingAverage} seconds`);
 };
 
 const promises = [
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(1), 1000); // (*)
+        setTimeout(() => resolve(1), 10000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(2), 2000); // (*)
+        setTimeout(() => resolve(2), 9000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(4), 4000); // (*)
+        setTimeout(() => resolve(4), 8000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(8), 8000); // (*)
+        setTimeout(() => resolve(8), 7000); // (*)
     }),
     new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(10), 10000); // (*)
+        setTimeout(() => resolve(10), 6000); // (*)
+    }),
+    new Promise(function (resolve, reject) {
+        setTimeout(() => resolve(12), 5000); // (*)
+    }),
+    new Promise(function (resolve, reject) {
+        setTimeout(() => resolve(14), 4000); // (*)
+    }),
+    new Promise(function (resolve, reject) {
+        setTimeout(() => resolve(16), 3000); // (*)
+    }),
+    new Promise(function (resolve, reject) {
+        setTimeout(() => resolve(18), 2000); // (*)
+    }),
+    new Promise(function (resolve, reject) {
+        setTimeout(() => resolve(18), 1000); // (*)
     }),
 ];
 
