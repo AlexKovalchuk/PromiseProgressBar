@@ -1,16 +1,3 @@
-/**
- * Created by alex on 7/23/18.
- */
-
-// класс с колбуков(функция с выводом полей обьекта)
-// Главная функция : принимает массив промисов. Загоняем массив промисов в Map(),
-//  устанавливаем поля обьекта в НОЛЬ
-//  пробегаемся по промисам, утсанавливаем два колбека для резолв и реджект
-// Колбек функция: принимает промис и проверяет или он не выполнен.
-//  плюсует поля: выолнено ок или с ошибкой
-//  выполняю колбек который дает обновленные данные
-// Геттер функции для полей.
-
 class PromiseProgressBar {
     constructor(collBackFunction) {
         this._totalCount = 0;
@@ -29,7 +16,7 @@ class PromiseProgressBar {
     }
 
   calculateSimpleMovingAverage() {
-    let sum=0;
+    let sum = 0;
     let timeOfDonePromises = this._timeForEachDonePromise;
     let promiseCount = this._totalCount;
     if(promiseCount > timeOfDonePromises.length){
@@ -68,7 +55,7 @@ class PromiseProgressBar {
         if (typeof this._collback === 'function') this._collback(data);
     };
 
-    promiseCollback(promise, error, timeStart) {
+    promiseCallback(promise, error, timeStart) {
         if (this._promiseList.get(promise) === false) {
             if (error) {
                 this._doneError += 1;
@@ -83,22 +70,20 @@ class PromiseProgressBar {
     };
 
     resolvePromises(promiseArray) {
-        // console.info('promiseArray', promiseArray);
         this._totalCount = promiseArray.length;
 
         for (let promise of promiseArray) {
             this._promiseList.set(promise, false);
         }
-        // console.info('list', this._promiseList);
         this._totalCount = promiseArray.length;
         this._doneSuccess = 0;
         this._doneError = 0;
-        for (let [key, value] of this._promiseList) {
+        for (let [key] of this._promiseList) {
             let timeStart = new Date().getTime();
             key
                 .then(
-                    resolve => this.promiseCollback(key, null, timeStart),
-                    error => this.promiseCollback(key, error,timeStart)
+                    resolve => this.promiseCallback(key, null, timeStart),
+                    error => this.promiseCallback(key, error,timeStart)
                 )
                 .catch(e => console.info('error:', e));
         }
@@ -108,63 +93,6 @@ class PromiseProgressBar {
         return this._totalCount;
     }
 
-    get getDoneSuccess() {
-        return this._doneSuccess;
-    }
-
-    get getDoneError() {
-        return this._doneError;
-    }
-
-    get getTimeLeft() {
-        return this._timeLeft;
-    }
-
-    get getTimeSpend() {
-        return this._timeSpend;
-    }
-
-
 }
-
-const rollBack = function () {
-    // console.info(`total promises count: ${this._totalCount}, percent of done promises: ${this._percentDonePromises}%, success: ${this._doneSuccess} / errors: ${this._doneError}, total time spend: ${this._totalTimeSpend}, time of all done promises: ${this._timeForEachDonePromise}, time left: ${this._simpleMovingAverage} seconds`);
-};
-
-const promises = [
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(1), 10000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(2), 9000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(4), 8000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(8), 7000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(10), 6000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(12), 5000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(14), 4000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(16), 3000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(18), 2000); // (*)
-    }),
-    new Promise(function (resolve, reject) {
-        setTimeout(() => resolve(18), 1000); // (*)
-    }),
-];
-
-// const progressBar = new PromiseProgressBar(rollBack);
-// progressBar.resolvePromises(promises);
 
 export default PromiseProgressBar;
