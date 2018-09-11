@@ -6,10 +6,6 @@ import './PromiseProgressBar.css';
 import promiseIndicator from '../../helpers/PromiseProgressBar';
 import promiseArray from '../../helpers/PromiseArray';
 
-const rollBack = data => {
-    console.log('data', data);
-};
-
 class PromiseProgressBar extends Component {
     constructor(props){
         super(props);
