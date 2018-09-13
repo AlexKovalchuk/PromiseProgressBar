@@ -6,7 +6,6 @@ class PromiseProgressBar {
         this._timeSpend = 0;
         this._totalTimeSpend = 0;
         this._timeForEachDonePromise = [];
-        this._timeLeft = 0;
         this._promiseList = new Map();
         this._collback = collBackFunction;
         this._timeStart = 0;
