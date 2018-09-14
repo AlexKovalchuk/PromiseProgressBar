@@ -14,20 +14,20 @@ class PromiseProgressBar {
         this._simpleMovingAverage = 0;
     }
 
-  calculateSimpleMovingAverage() {
-    let sum = 0;
-    let timeOfDonePromises = this._timeForEachDonePromise;
-    let promiseCount = this._totalCount;
-    if(promiseCount > timeOfDonePromises.length){
-        promiseCount = timeOfDonePromises.length;
-    }
+    calculateSimpleMovingAverage() {
+        let sum = 0;
+        let timeOfDonePromises = this._timeForEachDonePromise;
+        let promiseCount = this._totalCount;
+        if (promiseCount > timeOfDonePromises.length) {
+            promiseCount = timeOfDonePromises.length;
+        }
 
-    for(let i=timeOfDonePromises.length-promiseCount; i<timeOfDonePromises.length; i++){
-        sum += timeOfDonePromises[i];
+        for (let i = timeOfDonePromises.length - promiseCount; i < timeOfDonePromises.length; i++) {
+            sum += timeOfDonePromises[i];
+        }
+        this._simpleMovingAverage = Math.round(sum / promiseCount) / 1000;
+        if (this.getTotalCount === this._timeForEachDonePromise.length) this._simpleMovingAverage = 0;
     }
-      this._simpleMovingAverage =  Math.round(sum/promiseCount)/1000;
-      if(this.getTotalCount === this._timeForEachDonePromise.length)this._simpleMovingAverage = 0;
-  }
 
     calculatePercentageOfDonePromises() {
         let done = this._doneSuccess + this._doneError;
@@ -36,7 +36,7 @@ class PromiseProgressBar {
 
     emit() {
         this._timeSpend = this._timeEnd - this._timeStart;
-        this._totalTimeSpend += this._timeSpend/1000;
+        this._totalTimeSpend += this._timeSpend / 1000;
         this._timeForEachDonePromise.push(this._timeSpend);
         this._timeEnd = 0;
         this._timeStart = 0;
@@ -52,6 +52,7 @@ class PromiseProgressBar {
             sma: this._simpleMovingAverage
         };
         if (typeof this._collback === 'function') this._collback(data);
+        return 'test';
     };
 
     promiseCallback(promise, error, timeStart) {
@@ -82,10 +83,11 @@ class PromiseProgressBar {
             key
                 .then(
                     resolve => this.promiseCallback(key, null, timeStart),
-                    error => this.promiseCallback(key, error,timeStart)
+                    error => this.promiseCallback(key, error, timeStart)
                 )
                 .catch(e => console.info('error:', e));
         }
+        return this._totalCount;
     };
 
     get getTotalCount() {
