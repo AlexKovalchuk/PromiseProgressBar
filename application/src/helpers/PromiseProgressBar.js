@@ -70,12 +70,11 @@ class PromiseProgressBar {
     };
 
     resolvePromises(promiseArray) {
-        this._totalCount = promiseArray.length;
-
+        this._promiseList.clear();
         for (let promise of promiseArray) {
             this._promiseList.set(promise, false);
         }
-        this._totalCount = promiseArray.length;
+        this._totalCount = this._promiseList.size;
         this._doneSuccess = 0;
         this._doneError = 0;
         for (let [key] of this._promiseList) {
@@ -94,6 +93,12 @@ class PromiseProgressBar {
         return this._totalCount;
     }
 
+    get done() {
+        return this._doneSuccess + this._doneError;
+    }
 }
+
+// отсеивать дублируемые и промисі
+// отсеивать устаревшие промисы -
 
 export default PromiseProgressBar;
