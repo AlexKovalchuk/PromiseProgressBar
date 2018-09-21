@@ -6,13 +6,8 @@ import PromiseIndicator from './helpers/PromiseProgressBar';
 import promiseArray from './helpers/PromiseArray';
 
 const callback = data => {
-    // console.log('data:', data);
-    return {};
+    return data || {};
 };
-const assert = chai.assert;
-const promiseIndicator = new PromiseIndicator(callback);
-const emit = () => promiseIndicator.emit();
-const resolvePromises = () => promiseIndicator.resolvePromises(promiseArray);
 
 function delay(timeout, result) {
     return new Promise((resolve, reject) => {
@@ -26,22 +21,29 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-describe('callback', () => {
+describe('promises', () => {
+    const assert = chai.assert;
+    const promiseIndicator = new PromiseIndicator(callback);
+    const emit = () => promiseIndicator.emit();
+    const resolvePromises = () => promiseIndicator.resolvePromises(promiseArray);
+
     it('callback should return type object', () => {
         assert.typeOf(callback(), 'object');
     });
-    it('emit should return type string', () => {
-        assert.typeOf(emit(), 'string');
-    });
+
+
     it('resolvePromises should return type number', () => {
         assert.typeOf(resolvePromises(), 'number');
     });
+
     it('emit is function', () => {
         assert.isFunction(emit, 'function');
     });
+
     it('callback is function', () => {
         assert.isFunction(callback, 'function');
     });
+
     it('promiseIndicator is instanceOf PromiseIndicator', () => {
         assert.instanceOf(promiseIndicator, PromiseIndicator, 'instanceOf PromiseIndicator');
     });
@@ -68,7 +70,7 @@ describe('callback', () => {
         assert(totalCount === promises.length, `${promises.length} tasks expected but ${totalCount} found`);
     });
 
-    it('check data', () => {
+    it('Check data', () => {
         const promises1 = [
             delay(100, 1),
             delay(200, 2),
@@ -98,5 +100,45 @@ describe('callback', () => {
                     assert(percent === 100, 'Invalid percent of done');
                 }
             );
+    });
+    // организовать проверку на нестандартные варианты выполнения программы.
+    it('totalCount is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._totalCount, 'is not NaN');
+    });
+    it('doneSuccess is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._doneSuccess, 'is not NaN');
+    });
+    it('doneError is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._doneError, 'is not NaN');
+    });
+    it('timeSpend is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._timeSpend, 'is not NaN');
+    });
+    it('totalTimeSpend is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._totalTimeSpend, 'is not NaN');
+    });
+    it('timeStart is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._timeStart, 'is not NaN');
+    });
+    it('timeEnd is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._timeEnd, 'is not NaN');
+    });
+
+    it('percentDonePromises is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._percentDonePromises, 'is not NaN');
+    });
+
+    it('simpleMovingAverage is not NaN', () => {
+        assert.isNotNaN(promiseIndicator._simpleMovingAverage, 'is not NaN');
+    });
+
+    it('timeForEachDonePromise is array', () => {
+        assert.isArray(promiseIndicator._timeForEachDonePromise, 'is array');
+    });
+
+    it('promiseIndicator contain all keys', () => {
+        assert.containsAllKeys(promiseIndicator, ['_totalCount', '_doneSuccess', '_doneError', '_timeSpend',
+            '_totalTimeSpend', '_timeForEachDonePromise', '_promiseList', '_collback', '_timeStart', '_timeEnd',
+            '_percentDonePromises', '_simpleMovingAverage'], 'contain all keys');
     });
 });

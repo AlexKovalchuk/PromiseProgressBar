@@ -52,7 +52,6 @@ class PromiseProgressBar {
             sma: this._simpleMovingAverage
         };
         if (typeof this._collback === 'function') this._collback(data);
-        return 'test';
     };
 
     promiseCallback(promise, error, timeStart) {
@@ -96,9 +95,10 @@ class PromiseProgressBar {
     get done() {
         return this._doneSuccess + this._doneError;
     }
-}
 
-// отсеивать дублируемые и промисі
-// отсеивать устаревшие промисы -
+    getThis() {
+        return this;
+    }
+}
 
 export default PromiseProgressBar;

@@ -6,67 +6,67 @@ const promiseArray = [];
 
 let promise1 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('1');
+        // console.log('1');
         resolve({data: '1'});
     }, 10000);
 });
 let promise2 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('2');
+        // console.log('2');
         resolve({data: '2'});
     }, 9000);
 });
 let promise3 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('3');
+        // console.log('3');
         resolve({data: '3'});
     }, 8000);
 });
 let promise4 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('4');
+        // console.log('4');
         resolve({data: '4'});
     }, 7000);
 });
 let promise5 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('5');
+        // console.log('5');
         resolve({data: '5'});
     }, 5000);
 });
 let promise6 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('6');
+        // console.log('6');
         resolve({data: '6'});
     }, 6000);
 });
 let promise7 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('7');
+        // console.log('7');
         resolve({data: '7'});
     }, 7000);
 });
 let promise8 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('8');
+        // console.log('8');
         resolve({data: '8'});
     }, 5500);
 });
 let promise9 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('9');
+        // console.log('9');
         resolve({data: '9'});
     }, 6500);
 });
 let promise10 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('10');
+        // console.log('10');
         resolve({data: '10'});
     }, 15000);
 });
 let promise11 = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('11');
+        // console.log('11');
         resolve({data: '11'});
     }, 500);
 });

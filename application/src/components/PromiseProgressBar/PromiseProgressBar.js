@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import './PromiseProgressBar.css';
 import promiseIndicator from '../../helpers/PromiseProgressBar';
 import promiseArray from '../../helpers/PromiseArray';
+// import generators from '../../helpers/GeneratorLib';
 
 class PromiseProgressBar extends Component {
     constructor(props){
@@ -22,12 +23,16 @@ class PromiseProgressBar extends Component {
     }
 
     rollBack = data => {
-        console.log('data', data);
+        // console.log('data', data);
         this.setState({data});
     };
 
     componentDidMount(){
         this.state.promiseIndicator.resolvePromises(promiseArray);
+        // let cycle = generators.cycle([10,11,12,13,-24,5,6,7,8,-9,10,11,-12,13,14,15]);
+        // for(let i=0; i < 12; i++) {
+        //     console.log('Component', cycle.next());
+        // }
     }
 
     render() {
