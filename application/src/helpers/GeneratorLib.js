@@ -67,22 +67,83 @@ function* cycle(iterable) {
 
 // функція-генератор *range(start, stop, step=1)* - генерує послідовність
 // *start*, *start + step*, *start + step + step*... до *stop* невключно;
-function* range(n) {
-    for (let i = 0; i < n; ++i) {
-        yield i;
+
+function* range(start, stop, step = 1) {
+    let newStep = start + step;
+    yield start;
+    for(let i = start; newStep < stop; i++) {
+        yield newStep;
+        newStep += step;
+    }
+}
+
+// console.log('range  values:', Array.from(range(1, 22, 2)));
+
+//функція-генератор *takeWhile(operator, iterable)* -
+// Make an iterator that returns elements from the iterable
+// as long as the operator(x) is true.
+
+function* takeWhile(x, operator, iterable) {
+
+    for(let iter of iterable) {
+        if(operator(x, iter)) {
+            yield iter;
+        }
     }
 }
 
 // console.log(
-//     'cycle  values:',
+//     'TakeWhile  values:',
 //     Array.from(
-//         cycle(
-//             Array.from(signRange(2)),
+//         takeWhile(
+//             1,
+//             takeWhileOperator,
+//             Array.from(signRange(3))
 //         )
 //     )
 // );
+
+// функція *tee(iterable, n)* - повертає масив,
+// що складається із *n* послідовностей *iterable*;
+function* tee(n = 1, iterable) {
+
+    let iterableArray = [];
+    let result = [];
+    for(let iter of iterable) {
+        iterableArray.push(iter)
+    }
+
+    for(let i = 0; i < n; i++){
+        result.push(iterableArray);
+    }
+
+    yield result;
+}
+
+let teeObj = tee(2, signRange(3));
+for(let i = 0; i < 2; i++){
+    let tmpTee = teeObj.next();
+    if(tmpTee.value){
+        for(tmp of tmpTee.value){
+            console.log('tmp', tmp);
+        }
+    }
+}
+
+// функція вищого порядку *all(iterable)* = *iterable_0 && iterable_1 && ... && iterable_n*
+
+// console.log(
+//     'Tee  values:',
+//     Array.from(tee(2, signRange(3)))
+//     // tee(2, signRange(3))
+// );
+
 //helpers
 
+function takeWhileOperator(maxValue, currentValue) {
+    if(typeof maxValue === 'number' && typeof currentValue === 'number' && currentValue < maxValue) return true;
+    return false;
+}
 
 function* signRange(n) {
     for (let i = -n; i < n; ++i) {
