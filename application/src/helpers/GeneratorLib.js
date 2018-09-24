@@ -120,23 +120,34 @@ function* tee(n = 1, iterable) {
     yield result;
 }
 
-let teeObj = tee(2, signRange(3));
-for(let i = 0; i < 2; i++){
-    let tmpTee = teeObj.next();
-    if(tmpTee.value){
-        for(tmp of tmpTee.value){
-            console.log('tmp', tmp);
-        }
-    }
-}
+// let teeObj = tee(2, signRange(3));
+// for(let i = 0; i < 2; i++){
+//     let tmpTee = teeObj.next();
+//     if(tmpTee.value){
+//         for(tmp of tmpTee.value){
+//             console.log('tmp', tmp);
+//         }
+//     }
+// }
 
 // функція вищого порядку *all(iterable)* = *iterable_0 && iterable_1 && ... && iterable_n*
+function* reduce(operator, iterable, initial = true) {
+    let result = initial;
+    for(iter of iterable) {
+        result = operator(result, iter);
+        if(!result) break;
+        yield result;
+    }
 
-// console.log(
-//     'Tee  values:',
-//     Array.from(tee(2, signRange(3)))
-//     // tee(2, signRange(3))
-// );
+}
+function reduceOperator(first, second) {
+    return !!(first && second);
+}
+
+console.log(
+    'reduce  values:',
+    Array.from(reduce(reduceOperator, signRange(5), true))
+);
 
 //helpers
 
