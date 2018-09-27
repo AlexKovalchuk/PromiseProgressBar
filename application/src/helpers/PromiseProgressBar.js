@@ -83,6 +83,7 @@ class PromiseProgressBar {
         this._totalCount = promiseArray.length;
         this._doneSuccess = 0;
         this._doneError = 0;
+        // eslint-disable-next-line
         for (let [key, value] of this._promiseList) {
             let timeStart = new Date().getTime();
             key
@@ -156,3 +157,5 @@ const promises = [
 
 const progressBar = new PromiseProgressBar(rollBack);
 progressBar.resolvePromises(promises);
+
+export default PromiseProgressBar;
