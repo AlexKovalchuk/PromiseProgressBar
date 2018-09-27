@@ -3,33 +3,48 @@
  */
 import React, {Component} from 'react';
 import './PromiseProgressBar.css';
-import promiseProgressBar from '../../helpers/PromiseProgressBar';
+import promiseIndicator from '../../helpers/PromiseProgressBar';
 import promiseArray from '../../helpers/PromiseArray';
+// import generators from '../../helpers/GeneratorLib';
 
 class PromiseProgressBar extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
         this.state={
-            promiseProgressBar: new promiseProgressBar(this.promiseProgressBarCallback),
+            promiseIndicator: new promiseIndicator(this.rollBack),
+            data: {
+                tasksCount: 0,
+                tasksDone: 0,
+                percentDone: 0,
+                timeSpend: 0,
+                sma: 0,
+            }
         }
-
     }
 
-    componentDIdMount() {
-        this.state.promiseProgressBar.resolvePromises(promiseArray);
-    }
+    rollBack = data => {
+        // console.log('data', data);
+        this.setState({data});
+    };
 
-    promiseProgressBarCallback() {
-    console.log(`total promises count: ${this._totalCount}, percent of done promises: ${this._percentDonePromises}%, success: ${this._doneSuccess} / errors: ${this._doneError}, total time spend: ${this._totalTimeSpend}, time of all done promises: ${this._timeForEachDonePromise}, time left: ${this._simpleMovingAverage} seconds`);
+    componentDidMount(){
+        this.state.promiseIndicator.resolvePromises(promiseArray);
+        // let cycle = generators.cycle([10,11,12,13,-24,5,6,7,8,-9,10,11,-12,13,14,15]);
+        // for(let i=0; i < 12; i++) {
+        //     console.log('Component', cycle.next());
+        // }
     }
 
     render() {
         return(
             <div>
                 here will be my progress bar
-                <h1>We have {promiseArray.length} processes.</h1>
+                <h1>We have {this.state.data.tasksCount} processes.</h1>
                 <div>
-                    done processes ????
+                    <h3>done processes {this.state.data.tasksDone}</h3>
+                    <h3>done in percentage {this.state.data.percentDone}%</h3>
+                    <h3>time spent {this.state.data.timeSpend} seconds</h3>
+                    <h3>sma time {this.state.data.sma} seconds</h3>
                 </div>
             </div>
         )
