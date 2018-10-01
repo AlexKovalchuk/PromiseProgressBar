@@ -1,2 +1,0 @@
-# PromiseProgressBar
-DK ES Promise
