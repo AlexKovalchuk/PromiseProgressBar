@@ -1,0 +1,115 @@
+@import '~vars'
+
+.side-menu
+  display flex
+  min-height 100%
+  +tablet()
+    display none
+  .menu-wrapper
+    overflow hidden
+    width 105px
+    height 100%
+  .menu
+    overflow auto
+    height 100%
+    display block
+    width 125px
+    background-color $menu-bg
+    list-style-type none
+    margin 0
+    padding 0
+    .menu-item.active
+      background-color $menu-bg-active
+      p
+        color $menu-color-active
+      img
+        filter drop-shadow(0 0 4px rgba(61, 255, 255, 0.36)) saturate(0) brightness(2)
+      svg
+        filter drop-shadow(0 0 4px rgba(61, 255, 255, 0.36)) saturate(0) brightness(2)
+
+    .menu-item
+      width inherit
+      height 110px
+      display flex
+      flex-direction column
+      align-items center
+      justify-content center
+      transition background-color ease-in-out 0.3s
+      &:hover
+        background-color $menu-bg-active
+        cursor pointer
+        p
+          color $menu-color-active
+        img
+          filter drop-shadow(0 0 4px rgba(61, 255, 255, 0.36)) saturate(0) brightness(2)
+        svg
+          filter drop-shadow(0 0 4px rgba(61, 255, 255, 0.36)) saturate(0) brightness(2)
+      img
+        height 50px
+        width 50px
+        fill $menu-color
+        transition fill 0.3s ease-in-out
+      svg
+        height 50px
+        //fill $menu-color
+        transition fill 0.3s ease-in-out
+      p
+        color $menu-color
+        transition color 0.3s ease-in-out
+        margin-top 10px
+  .sub-menu-wrapper
+    overflow hidden
+    width 240px
+    height 100%
+  .sub-menu
+    list-style-type none
+    width 260px
+    height 100%
+    background-color $menu-bg-active
+    overflow auto
+    &::-webkit-scrollbar
+      display: none;
+    li:hover
+      background $menu-section-active
+      cursor pointer
+    .sub-menu-item.active
+      border 1px solid $menu-divider
+      .sub-x2-menu-items
+        display block
+      .menu-sub-section-text
+        background $menu-section-active
+    .sub-menu-item
+      display flex
+      flex-direction column
+      justify-content  center
+      .menu-sub-section-text
+        padding 12px 0
+        color $menu-color-active
+        text-align left
+        padding-left 20px
+      .sub-x2-menu-items
+        display none
+        list-style-type none
+        width 100%
+        background-color $menu-bg-active
+        .sub-x2-menu-item.active
+          background $menu-section-active
+        .sub-x2-menu-item
+          height 40px
+          border-top  1px solid $menu-divider
+          border-bottom 0
+          & > a
+            display flex
+            align-items center
+            width 100%
+            height 100%
+          //&:last-child
+            //border-bottom 1px solid $menu-divider
+          .sub-x2-menu-text
+            color $menu-color-active
+            text-align left
+            margin-left 40px
+
+
+
+

@@ -1,0 +1,58 @@
+*
+  margin 0
+  padding 0
+html, body
+  width 100%
+  height 100%
+a
+  text-decoration none
+
+
+$Segoe = Segoe, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif
+
+//scale ratio
+html
+  --scale-ratio: 1
+  @media (min-width: 1920px)
+    --scale-ratio: 1.3
+  @media (max-width: 599px)
+    --scale-ratio: 0.8
+
+$menu-bg = WHITE
+$menu-color = #f77a0b
+$menu-bg-active = #04295c
+$menu-color-active = #fff
+$menu-divider = #6e7c8f
+$error-color = #ff6666;
+
+$menu-section-active = linear-gradient(#0b3e7c, #032e63)
+$product-page-bg = radial-gradient(closest-side, #0b3e7c, #0b3e7c, #032e63)
+
+
+//MIXINS
+//MEDIA QUERIES
+extraDesktop()
+  @media (min-width: 1920px)
+    {block}
+desktop()
+  @media (max-width: 1919px)
+    {block}
+laptop()
+  @media (max-width: 1279px)
+    {block}
+laptop-small()
+  @media (max-width: 1103px)
+    {block}
+tablet()
+  @media (max-width: 959px)
+    {block}
+mobile()
+  @media (max-width: 599px)
+    {block}
+
+
+//SCALE RATIO
+scale-ratio(property, value)
+  {property} 'calc( %s * %s)' % (value var(--scale-ratio))
+
+

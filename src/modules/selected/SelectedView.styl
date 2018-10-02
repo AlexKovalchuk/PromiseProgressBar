@@ -1,0 +1,130 @@
+@import '~vars'
+.selected-view-wrapper
+  width 100%
+  height 100%
+  overflow hidden
+  .selected-view
+    overflow auto
+    height 100%
+    padding  0
+    width calc(100% + 20px)
+    +tablet()
+      margin 0
+    +mobile()
+      width 100%
+    &::-webkit-scrollbar
+      display: none;
+    .top-content
+      display flex
+      flex-direction row
+      justify-content space-between
+      align-items flex-end
+      +mobile()
+        flex-direction column
+        align-items normal
+        .text-content
+          margin-left 16px
+      .title-text
+        margin-bottom 30px
+        text-transform uppercase
+        color $menu-color
+        font-size 28px
+        font-family $Segoe
+        font-weight 600
+        text-align center
+      .timer-wrapper
+        +mobile()
+          margin-left 16px
+          width auto
+        margin 90px auto 0 auto
+        width 400px
+        text-align center
+        display block
+        font-family $Segoe
+        .countdown
+          color white
+          font-size 42px
+          margin 0
+          padding 0
+        .countdown-col-element-number
+          font-size 42px
+        .countdown-col-element
+          margin-right  14px
+        .timer-title
+          font-size 18px
+          color white
+          +tablet()
+            font-size 14px
+        .timer-counter
+          font-size 48px
+          +tablet()
+            font-size 34px
+          +mobile()
+            margin-bottom 60px
+
+
+    .product-list
+        width 100%
+        display flex
+        list-style-type none
+        flex-wrap wrap
+        justify-content space-evenly
+        height auto
+        padding  0 60px
+        box-sizing border-box
+        overflow hidden
+        +mobile()
+          padding 0
+        .item
+          margin 35px 0 10px 0
+          width 200px
+          scale-ratio(width, 200px)
+          transition opacity 0.3s ease-in-out
+          .item-container
+            position relative
+            img
+              scale-ratio(height, 160px)
+              filter: drop-shadow(0 0 6px rgba(61,255,255,0.36));
+            .title
+              color white
+              scale-ratio(font-size, 14px)
+              scale-ratio(width, 150px)
+              scale-ratio(height, 35px)
+              margin 6px auto 0 auto
+            .description
+              color white
+              scale-ratio(font-size, 10px)
+              scale-ratio(width, 150px)
+              scale-ratio(height, 40px)
+              margin 6px auto 12px auto
+          .score
+            z-index 1
+            position absolute
+            scale-ratio(top, -25px)
+            scale-ratio(left, 25px)
+            scale-ratio(width, 70px)
+            scale-ratio(height, 70px)
+            background-color rgba(9, 95, 174, 0.58)
+            border-radius 50%
+            display flex
+            flex-direction column
+            align-items center
+            text-align center
+            justify-content center
+            color white
+            font-family $Segoe
+            scale-ratio(font-size, 26px)
+            scale-ratio(line-height, 26px)
+            .group1
+              transform translateY(0)
+              & > span
+                margin-bottom 2px
+            & > div
+              display flex
+              align-items flex-end
+              transform translateY(-10px)
+              & > .smaller-text
+                transform translateY(5px)
+            .smaller-text
+              scale-ratio(font-size, 12px)
+              scale-ratio(margin-top, -6px)

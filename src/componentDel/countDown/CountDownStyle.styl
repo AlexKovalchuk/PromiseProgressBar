@@ -1,0 +1,29 @@
+@import '~vars'
+
+.countdown
+  margin 10px auto
+  padding-bottom 20px
+
+
+.countdown-col
+  display inline-block
+  .countdown-col-element
+    margin 0 20px
+    display flex
+    flex-direction column
+    +tablet()
+      margin 0 5px
+  .first-col-element
+    margin-left 0
+
+
+
+.countdown-col-element
+  .countdown-col-element-number
+    font-size 48px
+    +tablet()
+      font-size 34px
+  .countdown-col-element-label
+    font-size 14px
+    text-align center
+
