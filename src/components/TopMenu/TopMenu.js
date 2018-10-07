@@ -6,9 +6,11 @@ class TopMenu extends Component {
     render() {
 
         return(
-            <div className='topMenu__wrapper'>
+            <header className='header__wrapper'>
                 FURNITURE
-            </div>
+            </header>
         );
     }
 }
+
+export default TopMenu;
