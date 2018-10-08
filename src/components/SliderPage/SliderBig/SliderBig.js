@@ -5,17 +5,16 @@ import React, {Component} from 'react';
 import './SliderBig.styl';
 
 const BG_IMAGES = [
-    '../../../images/Background/bg1.jpg',
-    '../../../images/Background/bg2.jpg',
+    '../../../src/images/Background/bg1.jpg',
+    '../../../src/images/Background/bg2.jpg',
 ];
-
 
 class SliderBig extends Component {
     render(){
         return(
             <div className="slider-big_wrapper">
-                <img className="bg-img" src={BG_IMAGES[0]} alt=""/>
-                <img className="bg-img" src={BG_IMAGES[1]} alt=""/>
+                <img className="bg-img" src={BG_IMAGES[0]} alt="valerA"/>
+                <img className="bg-img" src={BG_IMAGES[1]} alt="CHAMPION"/>
             </div>
         )
     }

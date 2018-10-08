@@ -7,7 +7,7 @@ class TopMenu extends Component {
 
         return(
             <header className='header__wrapper'>
-                FURNITURE
+
             </header>
         );
     }
