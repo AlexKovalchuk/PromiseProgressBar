@@ -10,6 +10,8 @@ const BG_IMAGES = [
 ];
 
 class SliderBig extends Component {
+
+
     render(){
         return(
             <div className="slider-big_wrapper">
