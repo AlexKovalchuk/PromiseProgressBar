@@ -4,3 +4,60 @@
   width 100%
   height 100vh
   background silver
+  .slider-big_wrapper
+    height 100vh
+    width 100%
+    display flex
+    overflow hidden
+    .bg-img
+      height 100vh
+      width 100%
+      object-fit cover
+      top 75px
+      left 0
+      transition all ease 1500ms
+  .slider-small__wrapper
+    display flex
+    justify-content center
+    .slider-small-ul
+      width 1000%
+      max-width 690px
+      height 310px
+      display flex
+      overflow hidden
+      position absolute
+      top 30%
+      align-items flex-end
+      .slider-small-item-li-big
+        transform: scale(1.2);
+        transform-origin: bottom;
+        height: 210px;
+      .slider-small-item-li
+        width 230px
+        list-style none
+        background mediumvioletred
+        margin 0 30px
+        padding 10px
+        transform translateX(0px)
+        transition 1s
+        .slider-small-item-description-container
+          text-align center
+          margin 10px 0
+          .description-title
+            font-size 13px
+          .description-price
+            font-size 13px
+          .description-add-basket
+            font-size 10px
+        .slider-small-item-img-container-small
+          height 120px
+          width 110px
+          background darkgoldenrod
+          display flex
+          flex-direction column
+          .slider-small-item-img
+            height 85%
+            width 100%;
+            object-fit contain
+          .slider-small-item-img-go
+            color white
