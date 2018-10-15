@@ -21,18 +21,15 @@
     justify-content center
     .slider-small-ul
       width 1000%
-      max-width 690px
+      max-width 570px
       height 310px
       display flex
       overflow hidden
       position absolute
       top 30%
       align-items flex-end
-      .slider-small-item-li-big
-        transform: scale(1.2);
-        transform-origin: bottom;
-        height: 210px;
       .slider-small-item-li
+        transform-origin: bottom;
         width 230px
         list-style none
         background mediumvioletred
@@ -57,7 +54,22 @@
           flex-direction column
           .slider-small-item-img
             height 85%
-            width 100%;
+            width 100%
             object-fit contain
           .slider-small-item-img-go
             color white
+      .slider-small-item-li-big
+        transform scale(1.2)
+    .slider-small-buttons-prev
+    .slider-small-buttons-next
+      height 25px
+      width 25px
+      position absolute
+      top 33%
+      background url('../../../src/images/buttons/slider-small-item-li-big.png') no-repeat
+      background-size cover
+      background-position 100%
+    .slider-small-buttons-prev
+      left 120px
+      transform rotate(180deg)
+    //.slider-small-buttons-next

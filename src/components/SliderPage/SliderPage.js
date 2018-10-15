@@ -39,6 +39,36 @@ const BG_IMAGES = [
 
 
 class SliderPage extends Component {
+  ulRef = null;
+  prevRef = null;
+  nextRef = null;
+  liCounter = 1;
+
+  componentDidMount(){
+    this.setBigItem(this.liCounter, this.liCounter);
+    this.setState({});
+  }
+
+  setBigItem(oldCounter, newCounter) {
+    const liArr = document.querySelectorAll('.slider-small-item-li');
+    const direction = oldCounter - newCounter;
+
+    if(newCounter < 0 || newCounter > liArr.length) return;
+
+    if(liArr && liArr.length >= 2) {
+      liArr[oldCounter].classList.remove('slider-small-item-li-big');
+      liArr[newCounter].classList.add('slider-small-item-li-big');
+
+      if(newCounter === 0) this.prevRef.style.display = 'none';
+      else this.prevRef.style.display = 'block';
+
+      if(newCounter === liArr.length-1) this.nextRef.style.display = 'none';
+      else this.nextRef.style.display = 'block';
+    }
+
+
+
+  }
 
   render() {
     return (
@@ -48,8 +78,9 @@ class SliderPage extends Component {
           <img className="bg-img" src={BG_IMAGES[1]} alt="CHAMPION"/>
         </div>
 
+
         <div className="slider-small__wrapper">
-          <ul className="slider-small-ul">
+          <ul className="slider-small-ul" ref={ref => {this.ulRef = ref}}>
             {
               SLIDER_IMGS.map((item, index) => {
                 const {img, title, price} = item;
@@ -74,6 +105,15 @@ class SliderPage extends Component {
               })
             }
           </ul>
+          <div
+            ref={ref => this.prevRef = ref}
+            onClick={() => this.setBigItem(this.liCounter, --this.liCounter)}
+            className="slider-small-buttons-prev"
+          />
+          <div
+            ref={ref => this.nextRef = ref}
+            onClick={() => this.setBigItem(this.liCounter, ++this.liCounter)}
+            className="slider-small-buttons-next" />
         </div>
 
         <BottomSection />
