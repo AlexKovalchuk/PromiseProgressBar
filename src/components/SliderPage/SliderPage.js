@@ -51,13 +51,15 @@ class SliderPage extends Component {
 
   setBigItem(oldCounter, newCounter) {
     const liArr = document.querySelectorAll('.slider-small-item-li');
+    const  li_img = document.querySelectorAll('.slider-small-item-img-container-small');
     const direction = oldCounter - newCounter;
+    console.log(oldCounter,newCounter);
 
     if(newCounter < 0 || newCounter > liArr.length) return;
 
     if(liArr && liArr.length >= 2) {
-      liArr[oldCounter].classList.remove('slider-small-item-li-big');
-      liArr[newCounter].classList.add('slider-small-item-li-big');
+        li_img[oldCounter].classList.remove('slider-small-item-li-big');
+        li_img[newCounter].classList.add('slider-small-item-li-big');
 
       if(newCounter === 0) this.prevRef.style.display = 'none';
       else this.prevRef.style.display = 'block';
