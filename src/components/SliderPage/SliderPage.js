@@ -32,6 +32,81 @@ const BG_IMAGES = [
       title: 'Гошинин Диван',
       price: '15000'
     },
+    {
+      img: '../../../src/images/ItemsImages/img-1.jpg',
+      title: 'Валерин Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-2.png',
+      title: 'Васин Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-3.jpg',
+      title: 'Максима Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-4.jpg',
+      title: 'Гены Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-5.jpg',
+      title: 'Гошинин Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-1.jpg',
+      title: 'Валерин Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-2.png',
+      title: 'Васин Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-3.jpg',
+      title: 'Максима Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-4.jpg',
+      title: 'Гены Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-5.jpg',
+      title: 'Гошинин Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-1.jpg',
+      title: 'Валерин Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-2.png',
+      title: 'Васин Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-3.jpg',
+      title: 'Максима Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-4.jpg',
+      title: 'Гены Диван',
+      price: '15000'
+    },
+    {
+      img: '../../../src/images/ItemsImages/img-5.jpg',
+      title: 'Гошинин Диван',
+      price: '15000'
+    },
   ],
   go = 'Перейти',
   hrn = 'грн',
@@ -43,21 +118,43 @@ class SliderPage extends Component {
   prevRef = null;
   nextRef = null;
   liCounter = 1;
+  ulTransform = 0;
+  isClickEnable = true;
 
   componentDidMount(){
-    this.setBigItem(this.liCounter, this.liCounter);
+    // this.setBigItem(this.liCounter, this.liCounter);
+    this.enableClick();
+    this.initSlider();
     this.setState({});
   }
 
+  enableClick() {
+    console.log('enableClick');
+    this.ulRef.addEventListener('transitionend', () => {
+      this.isClickEnable = true;
+      console.log('enableClick', this.isClickEnable);
+
+    })
+  }
+
+  initSlider() {
+    const  liImg = document.querySelectorAll('.slider-small-item-img-container-small');
+    liImg[1].classList.remove('slider-small-item-li-big');
+    liImg[1].classList.add('slider-small-item-li-big');
+  }
+
   setBigItem(oldCounter, newCounter) {
+    if(!this.isClickEnable) return;
+    this.isClickEnable = false;
     const liArr = document.querySelectorAll('.slider-small-item-li');
-    const direction = oldCounter - newCounter;
+    const  liImg = document.querySelectorAll('.slider-small-item-img-container-small');
+    const directionMove = oldCounter - newCounter;
 
     if(newCounter < 0 || newCounter > liArr.length) return;
 
     if(liArr && liArr.length >= 2) {
-      liArr[oldCounter].classList.remove('slider-small-item-li-big');
-      liArr[newCounter].classList.add('slider-small-item-li-big');
+      liImg[oldCounter].classList.remove('slider-small-item-li-big');
+      liImg[newCounter].classList.add('slider-small-item-li-big');
 
       if(newCounter === 0) this.prevRef.style.display = 'none';
       else this.prevRef.style.display = 'block';
@@ -66,8 +163,11 @@ class SliderPage extends Component {
       else this.nextRef.style.display = 'block';
     }
 
-
-
+    // MOVE BLOCKS
+    const moveBlockPX = 190;
+    this.ulTransform = directionMove > 0 ? this.ulTransform + moveBlockPX : this.ulTransform - moveBlockPX;
+    this.ulRef.style.transform = `translateX(${this.ulTransform}px)`;
+    console.log('Click', this.isClickEnable);
   }
 
   render() {
